@@ -1,0 +1,16 @@
+# on:
+#   issues:
+#     types: [labeled]
+# jobs:
+#   set-component-label:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       issues: write
+#     if:
+#       ${{(contains(github.event.issue.labels.*.name, 'Affected/APIM-4.0.0'))}}
+#     steps:
+#       - run: echo Labels are not properly set
+#       - run: gh issue edit $ISSUE --add-label "Component/APIM"
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           ISSUE: ${{ github.event.issue.html_url }}

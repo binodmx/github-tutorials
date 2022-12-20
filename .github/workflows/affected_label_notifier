@@ -1,0 +1,16 @@
+# on:
+#   issues:
+#     types: [opened]
+# jobs:
+#   check-affected-label:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       issues: write
+#     if:
+#       ${{!(contains(github.event.issue.labels.*.name, 'Affected/APIM'))}}
+#     steps:
+#       - run: echo Affected label is not set
+#       - run: gh issue comment $ISSUE --body "This issue is **NOT** opened with a proper **Affected/** label. Make sure to add proper affected component label when opening issues. Please add or leave a comment with the proper reason label now."
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           ISSUE: ${{ github.event.issue.html_url }}

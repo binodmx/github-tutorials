@@ -1,0 +1,36 @@
+# on:
+#   issues:
+#     types: [opened]
+# jobs:
+#   set-affected-component-labels:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       issues: write
+#     steps:
+#       - name: Check APIM/4.1.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-4.1.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-4.1.0,Component/APIM"
+#       - name: Check APIM/4.0.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-4.0.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-4.0.0,Component/APIM"
+#       - name: Check APIM/3.2.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-3.2.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-3.2.0,Component/APIM"
+#       - name: Check APIM/3.1.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-3.1.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-3.1.0,Component/APIM"
+#       - name: Check APIM/3.0.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-3.0.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-3.0.0,Component/APIM"
+#       - name: Check APIM/2.6.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-2.6.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-2.6.0,Component/APIM"
+#       - name: Check APIM/2.5.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPIM-2.5.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APIM-2.5.0,Component/APIM"
+#       - name: Check APICTL/4.0.0
+#         if: ${{contains(toJSON(github.event.issue.body), 'Affected Component\n\nAPICTL-4.0.0')}}
+#         run: gh issue edit $ISSUE --add-label "Affected/APICTL-4.0.0,Component/APICTL"
+#     env:
+#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       ISSUE: ${{ github.event.issue.html_url }}

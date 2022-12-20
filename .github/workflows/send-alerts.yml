@@ -1,0 +1,48 @@
+# name: Send GitHub Internal Issue Alerts
+
+# on:
+#   issues:
+#     types: [labeled]
+
+# jobs:
+#   send-alerts:
+#     name: Send Issue Alerts
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Send alert to Google Chat
+#         if:
+#           ${{
+#           contains(github.event.label.name, 'Priority/Critical(P1)') ||
+#           contains(github.event.label.name, 'Priority/High(P2)') ||
+#           contains(github.event.label.name, 'Priority/Medium(P3)')
+#           }}
+#         run: |
+#           if [ ${{contains(github.event.issue.labels.*.name, 'product/apim')}} = true ]
+#           then
+#             PRODUCT='APIM'
+#           fi
+#           if [ ${{contains(github.event.issue.labels.*.name, 'product/ei')}} = true ]
+#           then
+#             PRODUCT='EI'
+#           fi
+#           if [ ${{github.event.label.name == 'Priority/Critical(P1)'}} = true ]
+#           then
+#             echo 'An issue has been labeled as priority level critical (P1). Please attend immediately!!!\nURL: ${{github.event.issue.html_url}}'
+#             MESSAGE="An $PRODUCT issue has been labeled as priority level critical (P1). Please attend immediately!!!\nURL: ${{github.event.issue.html_url}}"
+#           fi
+#           if [ ${{github.event.label.name == 'Priority/High(P2)'}} = true ]
+#           then
+#             echo 'An issue has been labeled as priority level high (P2). Please attend immediately!!!\nURL: ${{github.event.issue.html_url}}'
+#             MESSAGE="An $PRODUCT issue has been labeled as priority level high (P2). Please attend immediately!!!\nURL: ${{github.event.issue.html_url}}"
+#           fi
+#           if [ ${{github.event.label.name == 'Priority/Medium(P3)'}} = true ]
+#           then
+#             echo 'An issue has been labeled as priority level medium (P3). Please attend immediately!!!\nURL: ${{github.event.issue.html_url}}'
+#             MESSAGE="An $PRODUCT issue has been labeled as priority level medium (P3). Please attend immediately!!!\nURL: ${{github.event.issue.html_url}}"
+#           fi
+#           if [ "$MESSAGE" != "" ]
+#           then
+#             curl --request POST "$WEBHOOK_URL" --header 'Content-Type: application/json' --data "{\"text\":\"$MESSAGE\"}"
+#           fi
+#         env:
+#           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

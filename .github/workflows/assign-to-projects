@@ -1,0 +1,71 @@
+# on:
+#   issues:
+#     types: [opened]
+
+# jobs:
+#   add-to-project:
+#     name: Add issue to project
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Add issue to test project
+#         id: add-issue-to-project
+#         uses: actions/add-to-project@main
+#         with:
+#           project-url: https://github.com/users/binodmx/projects/1
+#           github-token: ${{ secrets.GH_PAT }}
+#           labeled: Patch, Type/Patch
+#           label-operator: OR
+#       - name: Add issue to test project2
+#         id: add-issue-to-project2
+#         uses: actions/add-to-project@main
+#         with:
+#           project-url: https://github.com/users/binodmx/projects/2
+#           github-token: ${{ secrets.GH_PAT }}
+#           labeled: Internal, Type/Internal
+#           label-operator: OR
+#       - name: Set product field of the patch issue
+#         if: ${{ steps.add-issue-to-project.outputs.itemId }}
+#         run: |
+#           products=`gh api graphql -f query='
+#             query {
+#               node(id: "PVT_kwHOAieDxc4AFM41") {
+#                 ... on ProjectV2 {
+#                   field(name: "Product") {
+#                     ... on ProjectV2SingleSelectField {
+#                       options {
+#                         id
+#                         name
+#                       }
+#                     }
+#                   }
+#                 }
+#               }
+#             }'`
+#           product_name=`echo $ISSUE_BODY | awk '/Product :/{print}' | awk '{split($0,a," : "); print a[2]}' | awk '{split($0,b," "); print b[1]}' | sed 's/\r$//'`
+#           option_id=`echo $products | jq '.data.node.field.options' | jq --arg productName $product_name '.[] | select(.name==$productName)' | jq -r '.id'`
+#           if [ $option_id ]
+#           then
+#             echo Setting "$product_name($option_id)" to product field...
+#             gh api graphql -F optionId=$option_id -f query='
+#               mutation addProduct($optionId: String) {
+#                 updateProjectV2ItemFieldValue(
+#                   input: {
+#                     projectId: "PVT_kwHOAieDxc4AFM41"
+#                     itemId: "${{ steps.add-issue-to-project.outputs.itemId }}"
+#                     fieldId: "PVTSSF_lAHOAieDxc4AFM41zgC_1Kk"
+#                     value: { 
+#                       singleSelectOptionId: "$optionId"
+#                     }
+#                   }
+#                 ) {
+#                   projectV2Item {
+#                     id
+#                   }
+#                 }
+#               }'
+#           else
+#             echo Could not get the product details.
+#           fi
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+#           ISSUE_BODY: ${{ github.event.issue.body }}

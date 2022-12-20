@@ -1,0 +1,29 @@
+# on:
+#   issues:
+#     types: [opened, labeled]
+
+# jobs:
+#   add-to-project:
+#     name: Add issue to project
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set product field
+#         run: |
+#           gh api graphql -f query='
+#             query {
+#               user(login: "binodmx") {
+#                 projectV2(number: 1) {
+#                   id
+#                 }
+#               }
+#             }'
+#           gh api graphql -f query='
+#             query {
+#               organization(login: "wso2-enterprise") {
+#                 projectV2(number: 106) {
+#                   id
+#                 }
+#               }
+#             }'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GH_PAT }}

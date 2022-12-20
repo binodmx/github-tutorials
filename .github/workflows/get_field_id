@@ -1,0 +1,46 @@
+# on:
+#   issues:
+#     types: [opened, labeled]
+
+# jobs:
+#   add-to-project:
+#     name: Add issue to project
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set product field
+#         run: |
+#           gh api graphql -f query='
+#             query{
+#             node(id: "PVT_kwDOATtEas4ACf0g") {
+#               ... on ProjectV2 {
+#                 fields(first: 20) {
+#                   nodes {
+#                     ... on ProjectV2Field {
+#                       id
+#                       name
+#                     }
+#                     ... on ProjectV2IterationField {
+#                       id
+#                       name
+#                       configuration {
+#                         iterations {
+#                           startDate
+#                           id
+#                         }
+#                       }
+#                     }
+#                     ... on ProjectV2SingleSelectField {
+#                       id
+#                       name
+#                       options {
+#                         id
+#                         name
+#                       }
+#                     }
+#                   }
+#                 }
+#               }
+#             }
+#           }'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GH_PAT }}

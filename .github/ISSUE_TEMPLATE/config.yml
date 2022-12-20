@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Create an Issue
+    url: https://github.community/
+    about: You will be redirected to wso2/api-manager repository where all the apim product suite issues are reported.
+  - name: GitHub Security Bug Bounty
+    url: https://bounty.github.com/
+    about: Please report security vulnerabilities here.
