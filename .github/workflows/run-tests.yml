@@ -42,7 +42,7 @@ jobs:
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
       - name: Build carbon-apimgt with tests, skipping AspectJ
-        run: mvn clean install --file pom.xml -Dskip.aspectj=true
+        run: mvn clean install --file carbon-apimgt/pom.xml -Dskip.aspectj=true
 #       - name: Upload unit test coverage to Codecov
 #         uses: codecov/codecov-action@v3
 #         with:
@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
       - name: Build carbon-apimgt without tests, skip AspectJ, skip portal builds
-        run: mvn clean install --file pom.xml -Dmaven.test.skip=true -Dskip.aspectj=true -Dnpm.build.skip=true
+        run: mvn clean install --file carbon-apimgt/pom.xml -Dmaven.test.skip=true -Dskip.aspectj=true -Dnpm.build.skip=true
       - name: Get carbon.apimgt.version
         run: mvn help:evaluate -Dexpression=project.version -q -DforceStdout > ../CARBON_APIMGT_VERSION_FILE
       - name: Print carbon.apimgt.version
