@@ -15,7 +15,7 @@ on:
 
 jobs:
   run-unit-tests:
-    name: Build carbon-apimgt with tests
+    name: Run unit tests
     runs-on: ubuntu-latest
     steps:
       - name: Set hostname
