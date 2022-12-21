@@ -114,7 +114,13 @@ jobs:
     name: Run integration tests
     runs-on: ubuntu-latest
     needs: build-product-apim
+    steps:
+      - name: Set hostname
+        run: sudo echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts
   run-ui-test:
     name: Run ui tests
     runs-on: ubuntu-latest
     needs: build-product-apim
+    steps:
+      - name: Set hostname
+        run: sudo echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts
