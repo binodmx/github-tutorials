@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-carbon-apimgt-with-tests:
-    name: Build carbon-apimgt with tests
+  build-carbon-apimgt:
+    name: Build carbon-apimgt
     runs-on: ubuntu-latest
     outputs:
       carbon-apimgt-version: ${{ steps.set-carbon-apimgt-version.outputs.carbon-apimgt-version }}
@@ -39,17 +39,17 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build carbon-apimgt with tests, skipping AspectJ
         run: mvn clean install --file carbon-apimgt/pom.xml -Dskip.aspectj=true
-#       - name: Upload unit test coverage to Codecov
-#         uses: codecov/codecov-action@v3
-#         with:
-#           flags: unit_tests
+      - name: Upload unit test coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          flags: unit_tests
       - name: Set carbon.apimgt.version
         id: set-carbon-apimgt-version
         run: echo "carbon-apimgt-version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`" >> $GITHUB_OUTPUT
   build-product-apim:
     name: Build product-apim
     runs-on: ubuntu-latest
-    needs: build-carbon-apimgt-with-tests
+    needs: build-carbon-apimgt
     steps:
       - name: Set hostname
         run: sudo echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts
@@ -74,8 +74,8 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
-      - name: Build product-apim with tests
-        run: mvn clean install -Dcarbon.apimgt.version=${{needs.build-carbon-apimgt-with-tests.outputs.carbon-apimgt-version}} -fae --file product-apim/pom.xml -Dmaven.test.skip=true
+      - name: Build product-apim without tests
+        run: mvn clean install -Dcarbon.apimgt.version=${{needs.build-carbon-apimgt.outputs.carbon-apimgt-version}} -fae --file product-apim/pom.xml -Dmaven.test.skip=true
   run-integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
