@@ -78,6 +78,11 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build product-apim without tests
         run: mvn clean install -Dcarbon.apimgt.version=${{needs.build-carbon-apimgt.outputs.carbon-apimgt-version}} -fae --file product-apim/pom.xml -Dmaven.test.skip=true
+      - name: Upload wso2am
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: path/to/artifact/world.txt
   run-integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
@@ -85,6 +90,9 @@ jobs:
     steps:
       - name: Set hostname
         run: sudo echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts
+      - uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
   run-ui-test:
     name: Run ui tests
     runs-on: ubuntu-latest
