@@ -19,11 +19,13 @@ jobs:
           ref: refs/heads/master
           fetch-depth: '10'
           path: helasentilex
+      - name: Get files
+        run: ls
       - name: Upload file
         uses: actions/upload-artifact@v2
         with:
           name: README.md
-          path: README.md
+          path: helasentilex/README.md
   job2:
     name: Job 2
     runs-on: ubuntu-latest
