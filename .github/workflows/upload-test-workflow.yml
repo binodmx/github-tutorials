@@ -34,6 +34,6 @@ jobs:
       - name: Download file
         uses: actions/download-artifact@v2
         with:
-          name: hello.txt
+          name: README.md
       - name: Read file
         run: cat README.md
