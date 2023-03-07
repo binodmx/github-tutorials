@@ -12,13 +12,18 @@ jobs:
     name: Job 1
     runs-on: ubuntu-latest
     steps:
-      - name: Create file
-        run: echo "hello binod" > hello.txt
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: binodmx/helasentilex
+          ref: refs/heads/master
+          fetch-depth: '10'
+          path: helasentilex
       - name: Upload file
         uses: actions/upload-artifact@v2
         with:
-          name: hello.txt
-          path: hello.txt
+          name: README.md
+          path: README.md
   job2:
     name: Job 2
     runs-on: ubuntu-latest
@@ -29,4 +34,4 @@ jobs:
         with:
           name: hello.txt
       - name: Read file
-        run: cat hello.txt
+        run: cat README.md
