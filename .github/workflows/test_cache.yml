@@ -28,7 +28,7 @@ jobs:
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
       - name: Build p1
-        run: mvn clean install --file .github/workflows/p1/pom.xml
+        run: mvn clean install --file p1/pom.xml
   build-p2:
     name: Build p2
     runs-on: ubuntu-latest
@@ -49,5 +49,5 @@ jobs:
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
       - name: Build p2
-        run: mvn clean install --file .github/workflows/p2/pom.xml
+        run: mvn clean install --file p2/pom.xml
     
