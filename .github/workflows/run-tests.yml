@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
       - name: Build product-apim without tests
-        run: mvn clean install -Dcarbon.apimgt.version=${{ needs.build-carbon-apimgt.outputs.carbon-apimgt-version }} --file product-apim/pom.xml -Dmaven.test.skip=true -DskipBenchMarkTest=true
+        run: mvn clean install -Dcarbon.apimgt.version=${{ needs.build-carbon-apimgt.outputs.carbon-apimgt-version }} --file product-apim/pom.xml -Dmaven.test.skip=true --projects '!org.wso2.am:org.wso2.carbon.am.integration.benchmark.test'
       - name: Set product.apim.version
         id: set-product-apim-version
         run: echo "product-apim-version=`mvn help:evaluate --file product-apim/pom.xml -Dexpression=project.version -q -DforceStdout`" >> $GITHUB_OUTPUT
