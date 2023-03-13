@@ -26,7 +26,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2
+          restore-keys: ${{ runner.os }}-m2
       - name: Build p1
         run: mvn clean install --file p1/pom.xml
   build-p2:
@@ -48,7 +49,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2
+          restore-keys: ${{ runner.os }}-m2
       - name: Build p2
         run: mvn clean install --file p2/pom.xml
     
