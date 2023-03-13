@@ -1,0 +1,25 @@
+openapi: 3.0.1
+info:
+  title: Test2
+  version: '1.0'
+servers:
+  - url: /
+security:
+  - default: []
+paths:
+  /*:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+components:
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'https://test.com'
+          scopes: {}
+
