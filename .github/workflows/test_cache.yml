@@ -22,14 +22,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '14.x'
+      - name: Build p1
+        run: mvn clean install --file p1/pom.xml
       - name: Cache maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2
           restore-keys: ${{ runner.os }}-m2
-      - name: Build p1
-        run: mvn clean install --file p1/pom.xml
   build-p2:
     name: Build p2
     runs-on: ubuntu-latest
