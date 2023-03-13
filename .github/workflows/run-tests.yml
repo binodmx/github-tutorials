@@ -44,7 +44,7 @@ jobs:
           flags: unit_tests
       - name: Set carbon.apimgt.version
         id: set-carbon-apimgt-version
-        run: echo "carbon-apimgt-version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`" >> $GITHUB_OUTPUT
+        run: echo "carbon-apimgt-version=`mvn help:evaluate --file carbon-apimgt/pom.xml -Dexpression=project.version -q -DforceStdout`" >> $GITHUB_OUTPUT
   build-product-apim:
     name: Build product-apim
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
         run: mvn clean install -Dcarbon.apimgt.version=${{ needs.build-carbon-apimgt.outputs.carbon-apimgt-version }} --file product-apim/pom.xml -Dmaven.test.skip=true
       - name: Set product.apim.version
         id: set-product-apim-version
-        run: echo "product-apim-version=`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`" >> $GITHUB_OUTPUT
+        run: echo "product-apim-version=`mvn help:evaluate --file product-apim/pom.xml -Dexpression=project.version -q -DforceStdout`" >> $GITHUB_OUTPUT
       - name: Upload wso2am zip
         uses: actions/upload-artifact@v2
         with:
