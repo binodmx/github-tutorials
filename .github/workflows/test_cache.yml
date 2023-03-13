@@ -1,0 +1,53 @@
+name: Test cache
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-p1:
+    name: Build p1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Java 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11.0.16+8
+          distribution: 'temurin'
+      - name: Set up Nodejs 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build p1
+        run: mvn clean install --file .github/workflows/p1/pom.xml
+  build-p2:
+    name: Build p2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Java 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11.0.16+8
+          distribution: 'temurin'
+      - name: Set up Nodejs 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build p2
+        run: mvn clean install --file .github/workflows/p2/pom.xml
+    
