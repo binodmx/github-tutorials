@@ -87,7 +87,7 @@ jobs:
   run-integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
-    needs: build-product-apim
+    needs: [build-carbon-apimgt, build-product-apim]
     steps:
       - name: Set hostname
         run: sudo echo "127.0.0.1 $(hostname)" | sudo tee -a /etc/hosts
@@ -115,7 +115,7 @@ jobs:
         run: |
           mkdir product-apim/modules/distribution/product/target
           cp wso2am-${{ needs.build-product-apim.outputs.product-apim-version }}.zip product-apim/modules/distribution/product/target/
-          mvn clean install -Dcarbon.apimgt.version=${{needs.build-carbon-apimgt.outputs.carbon-apimgt-version}} --file product-apim/modules/integration/tests-integration/pom.xml -fae
+          mvn clean install -Dcarbon.apimgt.version=${{ needs.build-carbon-apimgt.outputs.carbon-apimgt-version }} --file product-apim/modules/integration/tests-integration/pom.xml -fae
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
