@@ -82,7 +82,7 @@ jobs:
       - name: Upload wso2am zip
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: wso2am-${{ steps.set-product-apim-version.outputs.product-apim-version }}.zip
           path: product-apim/modules/distribution/product/target/wso2am-${{ steps.set-product-apim-version.outputs.product-apim-version }}.zip
   run-integration-tests:
     name: Run integration tests
