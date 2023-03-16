@@ -87,6 +87,14 @@ jobs:
   run-integration-tests:
     name: Run integration tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - id: 1
+            segment: group1
+          - id: 2
+            segment: group2
+      fail-fast: false
     needs: [build-carbon-apimgt, build-product-apim]
     steps:
       - name: Set hostname
@@ -116,6 +124,8 @@ jobs:
           mkdir product-apim/modules/distribution/product/target
           cp wso2am-${{ needs.build-product-apim.outputs.product-apim-version }}.zip product-apim/modules/distribution/product/target/
           mvn clean install -Dcarbon.apimgt.version=${{ needs.build-carbon-apimgt.outputs.carbon-apimgt-version }} --file product-apim/modules/integration/tests-integration/pom.xml -fae
+        env:
+          PRODUCT_APIM_TEST_GROUPS: ${{ matrix.segment }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
