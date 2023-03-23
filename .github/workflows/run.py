@@ -4,6 +4,7 @@ import requests
 # Get all existing labels in the repository
 all_existing_labels = []
 debug = []
+labels = []
 for retry_count in range(3):
     response = requests.get('https://api.github.com/repos/wso2/api-manager/labels', headers={"Accept": "application/vnd.github.v3+json"})
     if response.status_code == 200:
