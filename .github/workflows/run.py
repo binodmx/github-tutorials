@@ -19,12 +19,16 @@ i = os.environ["ISSUE_BODY"].index("### Affected Component") + 23
 j = os.environ["ISSUE_BODY"].index("### Version")
 component = os.environ["ISSUE_BODY"][i:j].strip()
 component_label = "Component/" + component
+# Debug
+print(component_label)
 if component_label in all_existing_labels:
     labels.append(component_label)
 
 # Get component version
 version = os.environ["ISSUE_BODY"][j+13:j+18].strip()
 affected_label = "Affected/" + component + "-" + version
+# Debug
+print(affected_label)
 if affected_label in all_existing_labels:
     labels.append(affected_label)
 
