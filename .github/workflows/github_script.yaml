@@ -21,10 +21,11 @@ jobs:
               console.error('Issue title is undefined');
               console.error(context.issue.title);
               console.error(context.issue);
-              console.error(github.rest.issues.get({
+              const response = await github.rest.issues.get({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo
-              }));
+              });
+              console.error(response);
               return;
             }
