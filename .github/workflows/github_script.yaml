@@ -19,5 +19,7 @@ jobs:
 
             if (!title) {
               console.error('Issue title is undefined');
+              console.error(context.issue.title);
+              console.error(context.issue);
               return;
             }
