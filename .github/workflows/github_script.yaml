@@ -1,0 +1,23 @@
+name: Create porting issues
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'port' }}
+    steps:
+      - name: Create porting issue
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const { number, title } = context.issue;
+
+            if (!title) {
+              console.error('Issue title is undefined');
+              return;
+            }
