@@ -10,7 +10,7 @@ jobs:
     if: ${{ github.event.label.name == 'bug' }}
     steps:
       - name: Create porting issue
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
