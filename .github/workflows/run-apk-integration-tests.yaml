@@ -25,5 +25,5 @@ jobs:
           go install github.com/mgechev/revive@latest
       - name: Run Integration Tests
         run: |
-          cd apk-repo/test/integration
+          cd wso2-apk/test/integration
           ./gradlew build
