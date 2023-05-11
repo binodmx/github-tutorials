@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run APK Integration Tests
 
 on:
   workflow_dispatch:
