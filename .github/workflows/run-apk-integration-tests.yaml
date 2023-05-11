@@ -1,0 +1,29 @@
+name: Run Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-apk-integration-tests:
+    name: Run APK Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout binodmx/wso2-apk
+        uses: actions/checkout@v3
+        with:
+          repository: binodmx/wso2-apk
+          ref: refs/heads/test
+          fetch-depth: '10'
+          path: wso2-apk
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
+      - name: Install Revive
+        shell: sh
+        run: |
+          go install github.com/mgechev/revive@latest
+      - name: Run Integration Tests
+        run: |
+          cd apk-repo/test/integration
+          ./gradlew build
