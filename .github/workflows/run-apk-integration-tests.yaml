@@ -23,6 +23,10 @@ jobs:
         shell: sh
         run: |
           go install github.com/mgechev/revive@latest
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          build-root-directory: wso2-apk/test/integration
       - name: Run Integration Tests
         run: |
           cd wso2-apk/test/integration
